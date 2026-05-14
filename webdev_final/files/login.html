@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — SREP</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-header">
+        <div class="auth-logo">📚</div>
+        <div class="auth-title">Welcome Back</div>
+        <div class="auth-subtitle">Sign in to your SREP account</div>
+      </div>
+
+      <div class="auth-body">
+        <div id="login-error" class="form-error mb-16 hidden" style="padding:10px 14px;background:#fee2e2;border-radius:var(--radius-sm);"></div>
+
+        <div class="form-group">
+          <label class="form-label" for="username">Username</label>
+          <input type="text" id="username" class="form-control" placeholder="Enter your username" autocomplete="username" autofocus>
+        </div>
+
+        <div class="form-group" style="margin-bottom:8px;">
+          <label class="form-label" for="password">Password</label>
+          <div style="position:relative;">
+            <input type="password" id="password" class="form-control" placeholder="Enter your password" autocomplete="current-password" style="padding-right:44px;">
+            <button type="button" id="toggle-pw" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--text-sm);">👁</button>
+          </div>
+        </div>
+
+        <div style="font-size:.8rem;color:var(--text-sm);margin-bottom:20px;">
+          Demo login: <strong>admin</strong> / <strong>1234</strong>
+        </div>
+
+        <button class="btn btn-primary btn-full btn-lg" id="login-btn">Sign In →</button>
+      </div>
+
+      <div class="auth-footer">
+        Don't have an account? <a href="register.html">Create one</a>
+        &nbsp;·&nbsp;
+        <a href="index.html">← Home</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      redirectIfAuthed(); // Already logged in? Go to dashboard
+
+      const userEl  = document.getElementById('username');
+      const passEl  = document.getElementById('password');
+      const errEl   = document.getElementById('login-error');
+      const loginBtn= document.getElementById('login-btn');
+      const togglePw= document.getElementById('toggle-pw');
+
+      function showError(msg) {
+        errEl.textContent = msg;
+        errEl.classList.remove('hidden');
+        userEl.classList.add('error');
+        passEl.classList.add('error');
+      }
+      function clearError() {
+        errEl.classList.add('hidden');
+        userEl.classList.remove('error');
+        passEl.classList.remove('error');
+      }
+
+      // Toggle password visibility
+      togglePw.addEventListener('click', () => {
+        passEl.type = passEl.type === 'password' ? 'text' : 'password';
+        togglePw.textContent = passEl.type === 'password' ? '👁' : '🙈';
+      });
+
+      // Login action
+      function doLogin() {
+        clearError();
+        const username = userEl.value.trim();
+        const password = passEl.value;
+
+        if (!username) { showError('Please enter your username.'); return; }
+        if (!password) { showError('Please enter your password.'); return; }
+
+        loginBtn.disabled = true;
+        loginBtn.textContent = 'Signing in…';
+
+        setTimeout(() => { // Small delay for UX
+          const result = login(username, password);
+          if (result.ok) {
+            showToast(`Welcome back, ${result.user.name}! 🎉`, 'success');
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 600);
+          } else {
+            showError(result.error);
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Sign In →';
+          }
+        }, 300);
+      }
+
+      loginBtn.addEventListener('click', doLogin);
+
+      [userEl, passEl].forEach(el => {
+        el.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+        el.addEventListener('input', clearError);
+      });
+    });
+  </script>
+</body>
+</html>

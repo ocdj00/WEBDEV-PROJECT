@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SREP — Student Reviewer Exchange Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .cta-section {
+      padding: 80px 40px;
+      background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);
+      text-align: center; color: #fff;
+    }
+    .cta-section h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+    .cta-section p  { color: rgba(255,255,255,.7); margin-bottom: 32px; font-size: 1rem; }
+    .landing-footer {
+      background: #0f172a; color: rgba(255,255,255,.5);
+      text-align: center; padding: 24px;
+      font-size: .82rem;
+    }
+    .stats-row {
+      display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+      padding: 40px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-item { text-align: center; }
+    .stat-num  { font-size: 2.2rem; font-weight: 900; color: var(--primary); line-height: 1; }
+    .stat-lbl  { font-size: .8rem; color: var(--text-md); margin-top: 4px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+    .landing-nav-links { display: flex; align-items: center; gap: 16px; }
+    .nav-link { font-size: .9rem; font-weight: 600; color: var(--text-md); padding: 6px 12px; border-radius: var(--radius-sm); transition: color var(--t-fast); }
+    .nav-link:hover { color: var(--primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="landing-nav">
+    <div class="landing-logo">
+      <div class="landing-logo-icon">📚</div>
+      <span class="landing-logo-text">SREP</span>
+    </div>
+    <div class="landing-nav-links">
+      <a href="#features" class="nav-link">Features</a>
+      <a href="login.html" class="btn btn-outline btn-sm">Sign In</a>
+      <a href="register.html" class="btn btn-primary btn-sm">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🎓 Academic Collaboration Platform</div>
+      <h1>Find the Right <span class="highlight">Reviewer</span> for Every Subject</h1>
+      <p>SREP connects students with qualified peer reviewers across all subjects. Browse profiles, rate sessions, manage study schedules — all in one platform.</p>
+      <div class="hero-actions">
+        <a href="register.html" class="btn btn-accent btn-lg">🚀 Get Started Free</a>
+        <a href="login.html"    class="btn btn-outline btn-lg" style="color:#c7d2fe;border-color:rgba(199,210,254,.4);">Sign In</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Stats -->
+  <div class="stats-row" id="live-stats">
+    <div class="stat-item">
+      <div class="stat-num" id="stat-reviewers">5</div>
+      <div class="stat-lbl">Reviewers</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-subjects">10</div>
+      <div class="stat-lbl">Subjects</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-users">3</div>
+      <div class="stat-lbl">Students</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-ratings">5</div>
+      <div class="stat-lbl">Ratings Given</div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <section class="features-section" id="features">
+    <div class="section-heading">
+      <h2>Everything You Need to Excel</h2>
+      <p>A comprehensive platform built for students, by students — completely offline-capable.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#ede9fe;">🔍</div>
+        <h3>Browse Reviewers</h3>
+        <p style="color:var(--text-md);font-size:.9rem;margin-top:8px;line-height:1.6;">
+          Search and filter qualified reviewers by subject. View their profiles, ratings, and contact information.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#d1fae5;">⭐</div>
+        <h3>Rating System</h3>
+        <p style="color:var(--text-md);font-size:.9rem;margin-top:8px;line-height:1.6;">
+          Rate reviewers after sessions and read peer reviews to find the best match for your learning style.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#fef3c7;">📅</div>
+        <h3>Calendar & Schedules</h3>
+        <p style="color:var(--text-md);font-size:.9rem;margin-top:8px;line-height:1.6;">
+          Manage study sessions, exam dates, and assignment deadlines with a built-in interactive calendar.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#dbeafe;">📝</div>
+        <h3>Submit Reviewers</h3>
+        <p style="color:var(--text-md);font-size:.9rem;margin-top:8px;line-height:1.6;">
+          Know a great reviewer? Submit their profile to help fellow students discover quality academic mentors.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#fce7f3;">🔔</div>
+        <h3>Notifications</h3>
+        <p style="color:var(--text-md);font-size:.9rem;margin-top:8px;line-height:1.6;">
+          Stay updated with activity alerts, submission confirmations, and upcoming event reminders.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background:#f0fdf4;">💾</div>
+        <h3>Works Offline</h3>
+        <p style="color:var(--text-md);font-size:.9rem;margin-top:8px;line-height:1.6;">
+          Fully offline-capable. All data is stored locally — works from a flash drive with no internet required.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <h2>Ready to Start Reviewing?</h2>
+    <p>Join your classmates and find the academic support you need — completely free.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <a href="register.html" class="btn btn-accent btn-lg">Create Your Account</a>
+      <a href="login.html"    class="btn btn-outline btn-lg" style="color:#c7d2fe;border-color:rgba(199,210,254,.4);">Sign In</a>
+    </div>
+  </section>
+
+  <footer class="landing-footer">
+    &copy; 2025 Student Reviewer Exchange Platform (SREP) — Built for offline use
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Update live stats from localStorage
+    document.addEventListener('DOMContentLoaded', () => {
+      const reviewers = getLS(KEYS.REVIEWERS) || [];
+      const users     = getLS(KEYS.USERS)     || [];
+      const ratings   = getLS(KEYS.RATINGS)   || [];
+
+      document.getElementById('stat-reviewers').textContent = reviewers.length;
+      document.getElementById('stat-users').textContent     = users.length;
+      document.getElementById('stat-ratings').textContent   = ratings.length;
+
+      // Redirect to dashboard if already logged in
+      redirectIfAuthed();
+    });
+  </script>
+</body>
+</html>

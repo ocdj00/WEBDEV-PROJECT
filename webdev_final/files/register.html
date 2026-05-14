@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register — SREP</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card" style="max-width:480px;">
+      <div class="auth-header">
+        <div class="auth-logo">🎓</div>
+        <div class="auth-title">Create Account</div>
+        <div class="auth-subtitle">Join the Reviewer Exchange community</div>
+      </div>
+
+      <div class="auth-body">
+        <div id="reg-error" class="form-error mb-16 hidden" style="padding:10px 14px;background:#fee2e2;border-radius:var(--radius-sm);"></div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="name">Full Name</label>
+            <input type="text" id="name" class="form-control" placeholder="Your full name" autofocus>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="username">Username</label>
+            <input type="text" id="username" class="form-control" placeholder="Choose a username">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email Address</label>
+          <input type="email" id="email" class="form-control" placeholder="your@email.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="subject">Subject Specialization</label>
+          <select id="subject" class="form-control">
+            <option value="">Select your primary subject…</option>
+            <option>Mathematics</option>
+            <option>Science</option>
+            <option>English</option>
+            <option>History</option>
+            <option>Technology</option>
+            <option>Arts</option>
+            <option>Filipino</option>
+            <option>Social Studies</option>
+            <option>Economics</option>
+            <option>General</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Choose a password">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="confirm-pw">Confirm</label>
+            <input type="password" id="confirm-pw" class="form-control" placeholder="Repeat password">
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-full btn-lg" id="reg-btn" style="margin-top:4px;">Create Account →</button>
+      </div>
+
+      <div class="auth-footer">
+        Already have an account? <a href="login.html">Sign in</a>
+        &nbsp;·&nbsp;
+        <a href="index.html">← Home</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      redirectIfAuthed();
+
+      const fields = {
+        name:      document.getElementById('name'),
+        username:  document.getElementById('username'),
+        email:     document.getElementById('email'),
+        subject:   document.getElementById('subject'),
+        password:  document.getElementById('password'),
+        confirmPw: document.getElementById('confirm-pw'),
+      };
+      const errEl  = document.getElementById('reg-error');
+      const regBtn = document.getElementById('reg-btn');
+
+      function showError(msg) {
+        errEl.textContent = msg;
+        errEl.classList.remove('hidden');
+      }
+      function clearError() { errEl.classList.add('hidden'); }
+
+      function doRegister() {
+        clearError();
+
+        const name     = fields.name.value.trim();
+        const username = fields.username.value.trim();
+        const email    = fields.email.value.trim();
+        const subject  = fields.subject.value;
+        const password = fields.password.value;
+        const confirm  = fields.confirmPw.value;
+
+        // Validation
+        if (!name)     { showError('Full name is required.'); return; }
+        if (!username) { showError('Username is required.'); return; }
+        if (username.length < 3) { showError('Username must be at least 3 characters.'); return; }
+        if (!/^[a-zA-Z0-9_]+$/.test(username)) { showError('Username can only contain letters, numbers, and underscores.'); return; }
+        if (!email || !email.includes('@')) { showError('Please enter a valid email address.'); return; }
+        if (!subject)  { showError('Please select a subject specialization.'); return; }
+        if (!password) { showError('Password is required.'); return; }
+        if (password.length < 4) { showError('Password must be at least 4 characters.'); return; }
+        if (password !== confirm) { showError('Passwords do not match.'); return; }
+
+        regBtn.disabled = true;
+        regBtn.textContent = 'Creating account…';
+
+        setTimeout(() => {
+          const result = register({ name, username, email, subject, password });
+          if (result.ok) {
+            // Auto-login
+            login(username, password);
+            showToast(`Account created! Welcome, ${result.user.name}! 🎉`, 'success');
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 700);
+          } else {
+            showError(result.error);
+            regBtn.disabled = false;
+            regBtn.textContent = 'Create Account →';
+          }
+        }, 300);
+      }
+
+      regBtn.addEventListener('click', doRegister);
+
+      Object.values(fields).forEach(el => {
+        el.addEventListener('keydown', e => { if (e.key === 'Enter') doRegister(); });
+        el.addEventListener('input', clearError);
+      });
+    });
+  </script>
+</body>
+</html>
